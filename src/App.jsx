@@ -1,16 +1,21 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { CssBaseline } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
+
+import useStyles from './styles';
+
 import { Actors, MovieInformation, Movies, NavBar, Profile } from './components';
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <div>
+    <div className={classes.root}>
       <CssBaseline />
       <NavBar />
-      <main>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
         <Routes>
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/" element={<Movies />} />
