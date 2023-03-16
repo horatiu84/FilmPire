@@ -13,12 +13,10 @@ const el = document.getElementById('root');
 const root = ReactDOM.createRoot(el);
 root.render(
   <Provider store={store}>
-
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-
     </ThemeProvider>
   </Provider>,
 );

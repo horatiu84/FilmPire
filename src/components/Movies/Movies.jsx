@@ -2,24 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Box, CircularProgress, useMediaQuery, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { useGetMoviesQuerry } from '../../services/TMDB';
+import { useGetMoviesQuery } from '../../services/TMDB';
+import MovieList from '../MovieList/MovieList';
 
 function Movies() {
-  // const { data } = useGetMoviesQuerry();
+  const { data, error, isFetching } = useGetMoviesQuery();
 
-  // console.log(data);
+  if (isFetching) {
+    return (
+      <Box display="flex" justifyContent="center">
+        <CircularProgress size="4rem" />
+      </Box>
+    );
+  }
 
-  const page = 1;
-  console.log(process.env.REACT_APP_TMBD_KEY);
-  const tmdbApiKey = process.env.REACT_APP_TMBD_KEY;
-  console.log(tmdbApiKey);
+  if (!data.results.length) {
+    return (
+      <Box display="flex" alignItems="center" mt="20px">
+        <Typography variant="h4">
+          No movies that match that name.
+          <br />
+          Please search for something else!
+        </Typography>
+      </Box>
+    );
+  }
 
-  fetch(`https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${tmdbApiKey}`)
-    .then((response) => response.json())
-    .then((data) => console.log(data));
+  if (error) return 'An error has occured';
 
   return (
-    <div>Movies</div>
+    <div>
+      <MovieList movies={data} />
+    </div>
   );
 }
 
